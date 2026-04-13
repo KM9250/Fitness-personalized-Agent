@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
+  <rect width="192" height="192" rx="40" fill="#3b82f6"/>
+  <g transform="translate(96,96)">
+    <!-- Dumbbell icon -->
+    <rect x="-60" y="-8" width="120" height="16" rx="8" fill="white"/>
+    <rect x="-70" y="-25" width="20" height="50" rx="6" fill="white"/>
+    <rect x="50" y="-25" width="20" height="50" rx="6" fill="white"/>
+    <rect x="-78" y="-18" width="16" height="36" rx="4" fill="white" opacity="0.8"/>
+    <rect x="62" y="-18" width="16" height="36" rx="4" fill="white" opacity="0.8"/>
+  </g>
+  <text x="96" y="150" text-anchor="middle" fill="white" font-size="22" font-weight="bold" font-family="Arial">FitCoach</text>
+</svg>

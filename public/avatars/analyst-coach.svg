@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="bg-analyst" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4DD0E1"/>
+      <stop offset="100%" stop-color="#0D47A1"/>
+    </linearGradient>
+    <linearGradient id="skin-a" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#D7CCC8"/>
+      <stop offset="100%" stop-color="#BCAAA4"/>
+    </linearGradient>
+    <linearGradient id="glass-shine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="white" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="96" fill="url(#bg-analyst)"/>
+  <!-- Neck -->
+  <rect x="86" y="120" width="28" height="18" rx="4" fill="url(#skin-a)"/>
+  <!-- Body/shoulders -->
+  <path d="M48 170 Q48 142 76 136 L124 136 Q152 142 152 170 L152 200 L48 200 Z" fill="#0277BD"/>
+  <!-- Collar/tie area -->
+  <rect x="94" y="136" width="12" height="30" rx="2" fill="#01579B"/>
+  <path d="M94 136 L100 145 L106 136" fill="#0288D1"/>
+  <!-- Head -->
+  <ellipse cx="100" cy="92" rx="37" ry="39" fill="url(#skin-a)"/>
+  <!-- Neat short hair -->
+  <path d="M63 82 Q63 52 82 44 Q92 40 100 39 Q108 40 118 44 Q137 52 137 82 Q130 65 100 60 Q70 65 63 82 Z" fill="#37474F"/>
+  <!-- Side hair -->
+  <path d="M63 82 Q61 88 62 92" fill="none" stroke="#37474F" stroke-width="6" stroke-linecap="round"/>
+  <path d="M137 82 Q139 88 138 92" fill="none" stroke="#37474F" stroke-width="6" stroke-linecap="round"/>
+  <!-- Glasses -->
+  <!-- Left lens -->
+  <rect x="66" y="82" width="28" height="22" rx="5" fill="url(#glass-shine)" stroke="#263238" stroke-width="2.5"/>
+  <!-- Right lens -->
+  <rect x="106" y="82" width="28" height="22" rx="5" fill="url(#glass-shine)" stroke="#263238" stroke-width="2.5"/>
+  <!-- Bridge -->
+  <path d="M94 92 L106 92" stroke="#263238" stroke-width="2.5" fill="none"/>
+  <!-- Temple arms -->
+  <path d="M66 89 L58 87" stroke="#263238" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M134 89 L142 87" stroke="#263238" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Eyes behind glasses -->
+  <ellipse cx="80" cy="92" rx="5" ry="5" fill="white"/>
+  <ellipse cx="120" cy="92" rx="5" ry="5" fill="white"/>
+  <ellipse cx="81" cy="92.5" rx="3" ry="3.5" fill="#0D47A1"/>
+  <ellipse cx="121" cy="92.5" rx="3" ry="3.5" fill="#0D47A1"/>
+  <circle cx="82.5" cy="91" r="1.2" fill="white"/>
+  <circle cx="122.5" cy="91" r="1.2" fill="white"/>
+  <!-- Eyebrows - thoughtful, slightly raised -->
+  <path d="M70 79 Q80 75 92 78" fill="none" stroke="#37474F" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M108 78 Q120 75 130 79" fill="none" stroke="#37474F" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Subtle knowing smile -->
+  <path d="M88 110 Q100 116 112 110" fill="none" stroke="#795548" stroke-width="2" stroke-linecap="round"/>
+  <!-- Nose -->
+  <path d="M100 96 L97 104 L103 104" fill="none" stroke="#A1887F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Data accent: small chart icon on shoulder -->
+  <g transform="translate(130, 155)" opacity="0.6">
+    <rect x="0" y="8" width="4" height="8" rx="1" fill="#B3E5FC"/>
+    <rect x="6" y="4" width="4" height="12" rx="1" fill="#B3E5FC"/>
+    <rect x="12" y="0" width="4" height="16" rx="1" fill="#B3E5FC"/>
+  </g>
+  <!-- Outer ring accent -->
+  <circle cx="100" cy="100" r="96" fill="none" stroke="#80DEEA" stroke-width="3" opacity="0.4"/>
+</svg>

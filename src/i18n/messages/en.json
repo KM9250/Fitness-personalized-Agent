@@ -1,0 +1,123 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "close": "Close",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "start": "Start",
+    "finish": "Finish",
+    "kcal": "kcal",
+    "min": "min",
+    "kg": "kg",
+    "times": "times",
+    "sets": "sets",
+    "reps": "reps"
+  },
+  "nav": {
+    "home": "Home",
+    "workout": "Workout",
+    "chat": "Chat",
+    "stats": "Stats",
+    "profile": "Profile",
+    "coaches": "AI Coaches",
+    "settings": "Settings"
+  },
+  "dashboard": {
+    "greeting_morning": "Good morning",
+    "greeting_afternoon": "Good afternoon",
+    "greeting_evening": "Good evening",
+    "subtitle": "Let's get your training started",
+    "todayCalories": "Today's Calories",
+    "weekWorkouts": "This Week's Workouts",
+    "currentWeight": "Current Weight",
+    "startWorkout": "Start Workout",
+    "startWorkoutDesc": "Choose exercises and begin training",
+    "recentWorkouts": "Recent Workouts",
+    "showAll": "Show all",
+    "noWorkouts": "No workout records yet"
+  },
+  "workout": {
+    "title": "Workout",
+    "selectExercises": "Select Exercises",
+    "startSession": "Start Session",
+    "finish": "Finish Workout",
+    "history": "Workout History",
+    "noHistory": "No history yet",
+    "timer": "Timer",
+    "exercises": "exercises",
+    "summary": "Summary",
+    "totalTime": "Total Time",
+    "totalCalories": "Total Calories"
+  },
+  "chat": {
+    "title": "AI Chat",
+    "placeholder": "Type a message...",
+    "selectCoach": "Select a coach",
+    "emptyMessage": "Send a message to your AI coach",
+    "emptyHint": "Training advice, nutrition tips, motivation and more"
+  },
+  "stats": {
+    "title": "Statistics",
+    "subtitle": "Track your training progress",
+    "week": "Weekly",
+    "month": "Monthly",
+    "year": "Yearly",
+    "calories": "Calories Burned",
+    "weightTrend": "Weight Trend",
+    "frequency": "Workout Frequency",
+    "noData": "No data available"
+  },
+  "profile": {
+    "title": "Profile",
+    "displayName": "Display Name",
+    "height": "Height",
+    "weight": "Weight",
+    "birthYear": "Birth Year",
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female",
+    "other": "Other",
+    "activityLevel": "Activity Level",
+    "fitnessGoal": "Fitness Goal",
+    "weightLog": "Weight Log",
+    "addWeight": "Log Weight",
+    "recentWeights": "Recent Entries"
+  },
+  "coaches": {
+    "title": "AI Coach Management",
+    "addCoach": "Add Coach",
+    "active": "Active",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "preset": "Preset"
+  },
+  "settings": {
+    "title": "Settings",
+    "llmProvider": "LLM Provider",
+    "model": "Model",
+    "apiKey": "API Key",
+    "ollamaUrl": "Ollama URL",
+    "spontaneous": "Spontaneous Messages",
+    "spontaneousEnabled": "Coach speaks during training",
+    "spontaneousInterval": "Interval (minutes)",
+    "export": "Obsidian Export",
+    "exportAll": "Export All",
+    "language": "Language"
+  },
+  "categories": {
+    "all": "All",
+    "strength": "Strength",
+    "cardio": "Cardio",
+    "yoga": "Yoga",
+    "stretching": "Stretching",
+    "hiit": "HIIT"
+  }
+}
