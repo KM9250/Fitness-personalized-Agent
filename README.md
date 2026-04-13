@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FitCoach AI - パーソナライズドフィットネスコーチ
 
-## Getting Started
+AIフィットネスコーチがあなたのトレーニングをサポートするWebアプリケーション。
 
-First, run the development server:
+## 機能
+
+- **ワークアウト管理**: 筋トレ・有酸素運動・ヨガ・HIIT・ストレッチのメニューから選択、タイマー付きセッション管理
+- **AIコーチ**: 複数のAIコーチ（熱血トレーナー、ヨガインストラクター、データ分析コーチ）が切替可能。ワークアウト評価とフリー会話対応
+- **マルチLLM対応**: OpenAI (GPT)、Anthropic (Claude)、Google (Gemini)、Ollama (Gemma等ローカルSLM) に対応
+- **自発的発言**: トレーニング中にAIコーチが定期的に励ましやアドバイスを発言（オン/オフ可能）
+- **データ可視化**: 消費カロリー・体重推移・ワークアウト頻度をRechartsグラフで表示
+- **Obsidian連携**: ワークアウトログをYAMLフロントマター付きMarkdownファイルとしてエクスポート
+- **PWA対応**: スマートフォンにインストールしてアプリライクに使用可能
+- **レスポンシブ**: モバイル（画面下部タブ）/ デスクトップ（サイドバー）両対応
+
+## 技術スタック
+
+| カテゴリ | 技術 |
+|---------|------|
+| フレームワーク | Next.js 14 (App Router) + TypeScript |
+| スタイル | Tailwind CSS |
+| データベース | SQLite + Drizzle ORM |
+| LLM統合 | Vercel AI SDK (ai) |
+| チャート | Recharts |
+| バリデーション | Zod |
+
+## セットアップ
 
 ```bash
+# 依存関係インストール
+npm install
+
+# データベースセットアップ（マイグレーション + シードデータ）
+npm run db:setup
+
+# 開発サーバー起動
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### LLM APIキーの設定
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+設定画面（/settings）からAPIキーを入力するか、`.env.local` に設定:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cp .env.local.example .env.local
+# .env.local を編集してAPIキーを設定
+```
 
-## Learn More
+## NPMスクリプト
 
-To learn more about Next.js, take a look at the following resources:
+| コマンド | 説明 |
+|---------|------|
+| `npm run dev` | 開発サーバー起動 (localhost:3000) |
+| `npm run build` | プロダクションビルド |
+| `npm start` | プロダクションサーバー起動 |
+| `npm run db:setup` | DB初期化（マイグレーション + シード） |
+| `npm run db:generate` | Drizzleマイグレーション生成 |
+| `npm run db:studio` | Drizzle Studio起動 |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## プロジェクト構造
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+├── app/          # Next.js App Routerページ & APIルート
+├── components/   # UIコンポーネント（ui, layout, workout, chat, coaches, stats, profile）
+├── lib/          # DB、LLMプロバイダー、カロリー計算、エクスポート
+├── hooks/        # カスタムReactフック
+├── i18n/         # 国際化メッセージ (ja/en)
+└── types/        # TypeScript型定義
+```
 
-## Deploy on Vercel
+## ライセンス
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
