@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="bg-energetic" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF6B35"/>
+      <stop offset="100%" stop-color="#D32F2F"/>
+    </linearGradient>
+    <linearGradient id="skin-e" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFCC80"/>
+      <stop offset="100%" stop-color="#FFB74D"/>
+    </linearGradient>
+  </defs>
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="96" fill="url(#bg-energetic)"/>
+  <!-- Neck -->
+  <rect x="85" y="120" width="30" height="20" rx="4" fill="url(#skin-e)"/>
+  <!-- Body/shoulders -->
+  <path d="M45 170 Q45 140 75 135 L125 135 Q155 140 155 170 L155 200 L45 200 Z" fill="#C62828"/>
+  <!-- Shirt collar -->
+  <path d="M80 135 L100 150 L120 135" fill="none" stroke="#B71C1C" stroke-width="2"/>
+  <!-- Head -->
+  <ellipse cx="100" cy="95" rx="38" ry="40" fill="url(#skin-e)"/>
+  <!-- Spiky hair -->
+  <path d="M62 80 L58 50 L72 70 L68 42 L82 65 L80 38 L95 60 L95 35 L105 60 L110 35 L115 58 L120 40 L125 65 L130 45 L132 70 L140 55 L138 80" fill="#4E342E"/>
+  <!-- Hair base -->
+  <path d="M62 82 Q62 60 80 55 L120 55 Q138 60 138 82 L138 78 Q130 70 100 68 Q70 70 62 78 Z" fill="#4E342E"/>
+  <!-- Eyes -->
+  <ellipse cx="82" cy="92" rx="7" ry="7" fill="white"/>
+  <ellipse cx="118" cy="92" rx="7" ry="7" fill="white"/>
+  <ellipse cx="84" cy="92" rx="4" ry="4.5" fill="#3E2723"/>
+  <ellipse cx="120" cy="92" rx="4" ry="4.5" fill="#3E2723"/>
+  <circle cx="85.5" cy="90.5" r="1.5" fill="white"/>
+  <circle cx="121.5" cy="90.5" r="1.5" fill="white"/>
+  <!-- Eyebrows - angled for energy -->
+  <path d="M72 82 L92 80" stroke="#4E342E" stroke-width="3" stroke-linecap="round"/>
+  <path d="M108 80 L128 82" stroke="#4E342E" stroke-width="3" stroke-linecap="round"/>
+  <!-- Confident smile -->
+  <path d="M82 108 Q100 122 118 108" fill="none" stroke="#5D4037" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Nose -->
+  <path d="M100 96 L96 105 L104 105" fill="none" stroke="#E6AB68" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Outer ring accent -->
+  <circle cx="100" cy="100" r="96" fill="none" stroke="#FF8A65" stroke-width="3" opacity="0.5"/>
+</svg>

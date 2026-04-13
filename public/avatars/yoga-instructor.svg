@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="bg-yoga" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#CE93D8"/>
+      <stop offset="100%" stop-color="#7B1FA2"/>
+    </linearGradient>
+    <linearGradient id="skin-y" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFCCBC"/>
+      <stop offset="100%" stop-color="#FFAB91"/>
+    </linearGradient>
+    <linearGradient id="hair-y" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4A148C"/>
+      <stop offset="100%" stop-color="#311B92"/>
+    </linearGradient>
+  </defs>
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="96" fill="url(#bg-yoga)"/>
+  <!-- Long hair behind -->
+  <path d="M55 75 Q50 90 48 120 Q46 155 60 180 L75 200 L125 200 L140 180 Q154 155 152 120 Q150 90 145 75" fill="url(#hair-y)"/>
+  <!-- Neck -->
+  <rect x="87" y="118" width="26" height="18" rx="4" fill="url(#skin-y)"/>
+  <!-- Body/shoulders -->
+  <path d="M50 170 Q50 142 78 136 L122 136 Q150 142 150 170 L150 200 L50 200 Z" fill="#9C27B0"/>
+  <!-- V-neck detail -->
+  <path d="M85 136 L100 155 L115 136" fill="#8E24AA"/>
+  <!-- Head -->
+  <ellipse cx="100" cy="92" rx="36" ry="38" fill="url(#skin-y)"/>
+  <!-- Hair top and sides -->
+  <path d="M64 88 Q60 60 78 48 Q90 40 100 38 Q110 40 122 48 Q140 60 136 88 Q130 72 100 65 Q70 72 64 88 Z" fill="url(#hair-y)"/>
+  <!-- Hair side strands left -->
+  <path d="M64 88 Q58 95 55 110 Q53 120 54 130" fill="none" stroke="#4A148C" stroke-width="8" stroke-linecap="round"/>
+  <!-- Hair side strands right -->
+  <path d="M136 88 Q142 95 145 110 Q147 120 146 130" fill="none" stroke="#4A148C" stroke-width="8" stroke-linecap="round"/>
+  <!-- Eyes - gentle, slightly closed -->
+  <ellipse cx="84" cy="90" rx="6" ry="5.5" fill="white"/>
+  <ellipse cx="116" cy="90" rx="6" ry="5.5" fill="white"/>
+  <ellipse cx="85" cy="90.5" rx="3.5" ry="4" fill="#4A148C"/>
+  <ellipse cx="117" cy="90.5" rx="3.5" ry="4" fill="#4A148C"/>
+  <circle cx="86.5" cy="89" r="1.2" fill="white"/>
+  <circle cx="118.5" cy="89" r="1.2" fill="white"/>
+  <!-- Soft eyebrows -->
+  <path d="M74 82 Q84 78 92 81" fill="none" stroke="#4A148C" stroke-width="2" stroke-linecap="round"/>
+  <path d="M108 81 Q116 78 126 82" fill="none" stroke="#4A148C" stroke-width="2" stroke-linecap="round"/>
+  <!-- Gentle serene smile -->
+  <path d="M88 106 Q100 114 112 106" fill="none" stroke="#8D6E63" stroke-width="2" stroke-linecap="round"/>
+  <!-- Nose -->
+  <path d="M100 93 L97 102 L103 102" fill="none" stroke="#E0AB91" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Small lotus/third-eye dot -->
+  <circle cx="100" cy="72" r="2.5" fill="#E1BEE7" opacity="0.8"/>
+  <!-- Outer ring accent -->
+  <circle cx="100" cy="100" r="96" fill="none" stroke="#E1BEE7" stroke-width="3" opacity="0.4"/>
+</svg>
