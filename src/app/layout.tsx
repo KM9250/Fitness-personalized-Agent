@@ -1,9 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { AppShell } from "@/components/layout/app-shell";
 
-const inter = Inter({ subsets: ["latin"] });
+const geistSans = localFont({
+  src: "./fonts/GeistVF.woff",
+  variable: "--font-geist-sans",
+  weight: "100 900",
+});
 
 export const metadata: Metadata = {
   title: "FitCoach AI - パーソナライズドフィットネスコーチ",
@@ -32,9 +36,9 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <head>
-        <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+        <link rel="apple-touch-icon" href="/icons/icon-192.svg" />
       </head>
-      <body className={inter.className}>
+      <body className={`${geistSans.variable} font-sans antialiased`}>
         <AppShell>{children}</AppShell>
       </body>
     </html>

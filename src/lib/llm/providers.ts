@@ -2,10 +2,9 @@ import { createOpenAI } from "@ai-sdk/openai";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createOllama } from "ollama-ai-provider";
-import type { LanguageModel } from "ai";
 import type { LLMProviderConfig } from "@/types/llm";
 
-export function getLanguageModel(config: LLMProviderConfig): LanguageModel {
+export function getLanguageModel(config: LLMProviderConfig) {
   switch (config.provider) {
     case "openai": {
       const openai = createOpenAI({ apiKey: config.apiKey });

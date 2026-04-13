@@ -5,7 +5,8 @@ import {
   workoutEntries,
   exercises,
 } from "@/lib/db/schema";
-import { eq, sql } from "drizzle-orm";
+import { eq } from "drizzle-orm";
+
 
 export async function GET(
   request: Request,
@@ -53,7 +54,7 @@ export async function GET(
       .all();
 
     return NextResponse.json({ ...session, entries });
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: "Failed to fetch workout session" },
       { status: 500 }
@@ -126,7 +127,7 @@ export async function PATCH(
       .get();
 
     return NextResponse.json(updated);
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: "Failed to update workout session" },
       { status: 500 }
@@ -159,7 +160,7 @@ export async function DELETE(
       .run();
 
     return NextResponse.json({ success: true });
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: "Failed to delete workout session" },
       { status: 500 }

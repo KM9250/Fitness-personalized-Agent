@@ -15,9 +15,9 @@ export function workoutToMarkdown(
     return parts.join("\n");
   });
 
-  const categories = [
-    ...new Set(session.entries.map((e) => e.exercise?.category).filter(Boolean)),
-  ];
+  const categories = Array.from(
+    new Set(session.entries.map((e) => e.exercise?.category).filter(Boolean))
+  );
 
   const frontmatter = [
     "---",

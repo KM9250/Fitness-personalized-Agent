@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { useChat } from "ai/react";
-import { Card, CardContent } from "@/components/ui/card";
+import { useState, useEffect, useRef, FormEvent } from "react";
+import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport } from "ai";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
+
 import { CoachAvatar } from "@/components/coaches/coach-avatar";
 import { Send, Bot, Loader2 } from "lucide-react";
 import type { AICoach } from "@/types/llm";
@@ -13,13 +14,17 @@ import type { AICoach } from "@/types/llm";
 export default function ChatPage() {
   const [coaches, setCoaches] = useState<AICoach[]>([]);
   const [selectedCoachId, setSelectedCoachId] = useState<string>("");
+  const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const { messages, input, handleInputChange, handleSubmit, isLoading } =
-    useChat({
+  const { messages, sendMessage, status } = useChat({
+    transport: new DefaultChatTransport({
       api: "/api/chat",
       body: { coachId: selectedCoachId },
-    });
+    }),
+  });
+
+  const isLoading = status === "streaming" || status === "submitted";
 
   // Fetch available coaches
   useEffect(() => {
@@ -54,6 +59,21 @@ export default function ChatPage() {
     value: c.id,
     label: c.name,
   }));
+
+  function getMessageText(message: (typeof messages)[number]): string {
+    return message.parts
+      .filter((p): p is { type: "text"; text: string } => p.type === "text")
+      .map((p) => p.text)
+      .join("");
+  }
+
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    if (!inputValue.trim() || isLoading) return;
+    const text = inputValue;
+    setInputValue("");
+    await sendMessage({ text });
+  }
 
   return (
     <div className="flex h-[calc(100vh-8rem)] flex-col md:h-[calc(100vh-4rem)]">
@@ -114,6 +134,7 @@ export default function ChatPage() {
         <div className="space-y-4">
           {messages.map((message) => {
             const isUser = message.role === "user";
+            const text = getMessageText(message);
 
             return (
               <div
@@ -145,7 +166,7 @@ export default function ChatPage() {
                       : "bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-100"
                   }`}
                 >
-                  <p className="whitespace-pre-wrap">{message.content}</p>
+                  <p className="whitespace-pre-wrap">{text}</p>
                 </div>
               </div>
             );
@@ -181,15 +202,15 @@ export default function ChatPage() {
         <form onSubmit={handleSubmit} className="flex items-center gap-2">
           <div className="flex-1">
             <Input
-              value={input}
-              onChange={handleInputChange}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
               placeholder="メッセージを入力..."
               disabled={isLoading}
             />
           </div>
           <Button
             type="submit"
-            disabled={isLoading || !input.trim()}
+            disabled={isLoading || !inputValue.trim()}
             className="shrink-0"
           >
             <Send className="h-4 w-4" />

@@ -78,7 +78,7 @@ function formatTime(seconds: number): string {
 export default function ActiveWorkoutPage() {
   const params = useParams();
   const router = useRouter();
-  const sessionId = params.id as string;
+  void (params.id as string);
 
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(true);

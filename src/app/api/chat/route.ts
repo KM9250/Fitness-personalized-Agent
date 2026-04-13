@@ -113,7 +113,7 @@ export async function POST(request: Request) {
     const model = getLanguageModel(llmConfig!);
 
     const result = streamText({
-      model,
+      model: model as Parameters<typeof streamText>[0]["model"],
       system: systemPrompt,
       messages,
       onFinish: async ({ text }) => {
@@ -155,7 +155,7 @@ export async function POST(request: Request) {
       },
     });
 
-    return result.toTextStreamResponse();
+    return result.toUIMessageStreamResponse();
   } catch (error) {
     console.error("Chat error:", error);
     return NextResponse.json(

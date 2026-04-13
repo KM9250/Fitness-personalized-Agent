@@ -35,7 +35,7 @@ export async function GET(request: Request) {
     });
 
     return NextResponse.json(sessionsWithEntries);
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: "Failed to fetch workout sessions" },
       { status: 500 }
@@ -84,8 +84,8 @@ export async function POST(request: Request) {
     db.insert(workoutSessions).values(session).run();
 
     const entries = [];
-    let totalCalories = 0;
-    let totalDurationMin = 0;
+    // Running totals computed per-entry via calculateCalories
+
 
     for (let i = 0; i < exerciseInputs.length; i++) {
       const input = exerciseInputs[i];
@@ -109,9 +109,6 @@ export async function POST(request: Request) {
         durationMin
       );
 
-      totalCalories += caloriesBurned;
-      totalDurationMin += durationMin;
-
       const entry = {
         id: uuid(),
         sessionId,
@@ -133,7 +130,7 @@ export async function POST(request: Request) {
       { ...session, entries },
       { status: 201 }
     );
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: "Failed to create workout session" },
       { status: 500 }

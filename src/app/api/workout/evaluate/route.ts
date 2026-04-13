@@ -145,7 +145,7 @@ export async function POST(request: Request) {
     const model = getLanguageModel(llmConfig);
 
     const result = streamText({
-      model,
+      model: model as Parameters<typeof streamText>[0]["model"],
       system: systemPrompt,
       messages: [
         {

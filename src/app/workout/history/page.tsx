@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import {
   Calendar,
   Clock,
@@ -12,6 +11,7 @@ import {
   ChevronRight,
   History,
 } from "lucide-react";
+
 import type { WorkoutSession } from "@/types/workout";
 
 const STATUS_LABELS: Record<string, { label: string; color: string }> = {

@@ -64,7 +64,7 @@ export async function POST(request: Request) {
     const model = getLanguageModel(llmConfig);
 
     const { text } = await generateText({
-      model,
+      model: model as Parameters<typeof generateText>[0]["model"],
       system: systemPrompt,
       messages: [
         {
