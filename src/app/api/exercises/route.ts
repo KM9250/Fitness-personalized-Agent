@@ -9,7 +9,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const category = searchParams.get("category");
 
-    let query = db.select().from(exercises);
+    const query = db.select().from(exercises);
 
     if (category) {
       const results = query
@@ -21,7 +21,7 @@ export async function GET(request: Request) {
 
     const results = query.orderBy(exercises.category).all();
     return NextResponse.json(results);
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Failed to fetch exercises" },
       { status: 500 }
@@ -65,7 +65,7 @@ export async function POST(request: Request) {
     db.insert(exercises).values(newExercise).run();
 
     return NextResponse.json(newExercise, { status: 201 });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Failed to create exercise" },
       { status: 500 }

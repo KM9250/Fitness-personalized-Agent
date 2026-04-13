@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { workoutSessions } from "@/lib/db/schema";
-import { eq, and, gte, lte, sql, count } from "drizzle-orm";
+import { eq, and, gte, lte } from "drizzle-orm";
 import {
   startOfWeek,
   startOfMonth,
@@ -81,7 +81,7 @@ export async function GET(request: Request) {
       periodStart: periodStartStr,
       periodEnd: nowStr,
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Failed to fetch stats" },
       { status: 500 }

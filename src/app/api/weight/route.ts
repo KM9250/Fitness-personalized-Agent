@@ -35,7 +35,7 @@ export async function GET(request: Request) {
     }
 
     return NextResponse.json(results);
-  } catch (_error) {
+  } catch {
     return NextResponse.json(
       { error: "Failed to fetch weight entries" },
       { status: 500 }
@@ -74,7 +74,7 @@ export async function POST(request: Request) {
       .run();
 
     return NextResponse.json(newEntry, { status: 201 });
-  } catch (_error) {
+  } catch {
     return NextResponse.json(
       { error: "Failed to create weight entry" },
       { status: 500 }

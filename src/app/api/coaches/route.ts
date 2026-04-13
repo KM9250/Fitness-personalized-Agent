@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { aiCoaches } from "@/lib/db/schema";
-import { eq, desc, sql } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 import { v4 as uuid } from "uuid";
 
 export async function GET() {
@@ -13,7 +13,7 @@ export async function GET() {
       .all();
 
     return NextResponse.json(coaches);
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Failed to fetch coaches" },
       { status: 500 }
@@ -52,7 +52,7 @@ export async function POST(request: Request) {
     db.insert(aiCoaches).values(newCoach).run();
 
     return NextResponse.json(newCoach, { status: 201 });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Failed to create coach" },
       { status: 500 }
@@ -107,7 +107,7 @@ export async function PATCH(request: Request) {
       .get();
 
     return NextResponse.json(updated);
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Failed to update coach" },
       { status: 500 }
@@ -152,7 +152,7 @@ export async function DELETE(request: Request) {
       .run();
 
     return NextResponse.json({ success: true });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Failed to delete coach" },
       { status: 500 }

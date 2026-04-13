@@ -179,7 +179,7 @@ export async function POST(request: Request) {
         "Content-Disposition": `attachment; filename="${filename}"`,
       },
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Failed to export workout data" },
       { status: 500 }
