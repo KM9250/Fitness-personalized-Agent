@@ -12,7 +12,14 @@ import { desc, eq } from "drizzle-orm";
 import { v4 as uuid } from "uuid";
 import { getLanguageModel } from "@/lib/llm/providers";
 import { getLLMConfig } from "@/lib/llm/config";
-import { streamText } from "ai";
+import { streamText, convertToModelMessages, type UIMessage } from "ai";
+
+function extractText(message: UIMessage): string {
+  return message.parts
+    .filter((p): p is { type: "text"; text: string } => p.type === "text")
+    .map((p) => p.text)
+    .join("");
+}
 
 export async function POST(request: Request) {
   try {
@@ -112,22 +119,21 @@ export async function POST(request: Request) {
 
     const model = getLanguageModel(llmConfig!);
 
+    const uiMessages = messages as UIMessage[];
+
     const result = streamText({
       model: model as Parameters<typeof streamText>[0]["model"],
       system: systemPrompt,
-      messages,
+      messages: await convertToModelMessages(uiMessages),
       onFinish: async ({ text }) => {
         try {
-          const lastUserMessage = messages[messages.length - 1];
+          const lastUserMessage = uiMessages[uiMessages.length - 1];
           if (lastUserMessage && lastUserMessage.role === "user") {
             db.insert(chatMessages)
               .values({
                 id: uuid(),
                 role: "user",
-                content:
-                  typeof lastUserMessage.content === "string"
-                    ? lastUserMessage.content
-                    : JSON.stringify(lastUserMessage.content),
+                content: extractText(lastUserMessage),
                 provider: llmConfig!.provider,
                 model: llmConfig!.model,
                 coachId: coachId ?? null,

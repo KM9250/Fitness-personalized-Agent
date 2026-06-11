@@ -95,6 +95,11 @@ export async function PATCH(request: Request) {
     if (fields.avatarUrl !== undefined) updateData.avatarUrl = fields.avatarUrl;
     if (fields.isActive !== undefined) updateData.isActive = fields.isActive;
 
+    // Only one coach can be active at a time
+    if (fields.isActive === true) {
+      db.update(aiCoaches).set({ isActive: false }).run();
+    }
+
     db.update(aiCoaches)
       .set(updateData)
       .where(eq(aiCoaches.id, id))
