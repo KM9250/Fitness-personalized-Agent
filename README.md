@@ -53,9 +53,41 @@ cp .env.local.example .env.local
 | `npm run dev` | 開発サーバー起動 (localhost:3000) |
 | `npm run build` | プロダクションビルド |
 | `npm start` | プロダクションサーバー起動 |
+| `npm run start:https` | HTTPS対応プロダクションサーバー起動（証明書は環境変数で指定） |
 | `npm run db:setup` | DB初期化（マイグレーション + シード） |
 | `npm run db:generate` | Drizzleマイグレーション生成 |
 | `npm run db:studio` | Drizzle Studio起動 |
+
+## リモートアクセス（出先のスマホから使う）
+
+自宅サーバーで動かし、外出先のスマホから利用する場合の推奨構成は **Tailscale VPN** です。
+
+```bash
+# 1. サーバー・スマホ両方にTailscaleをインストールし、同一アカウントでログイン
+
+# 2. HTTPS証明書を取得（PWAインストールに必要）
+tailscale cert <マシン名>.<tailnet名>.ts.net
+
+# 3. HTTPSで起動
+HTTPS_KEY_PATH=./<マシン名>.<tailnet名>.ts.net.key \
+HTTPS_CERT_PATH=./<マシン名>.<tailnet名>.ts.net.crt \
+npm run start:https
+
+# 4. スマホのブラウザで https://<マシン名>.<tailnet名>.ts.net:3000 を開き
+#    「ホーム画面に追加」でPWAとしてインストール
+```
+
+### 認証（パスワードログイン）
+
+VPNを使わず公開する場合や、追加の保護が必要な場合は `.env.local` に `APP_PASSWORD` を設定してください。設定すると全ページ・全APIにログインが必要になります（未設定ならログイン不要のまま）。
+
+```bash
+APP_PASSWORD=your-strong-password
+```
+
+- セッションはHttpOnly Cookieで30日間保持されます
+- LLM APIキーは設定APIのレスポンスでマスクされ、平文では取得できません
+- VPNなしの公開時は、Cloudflare Access等の認証プロキシ併用を推奨します
 
 ## プロジェクト構造
 
