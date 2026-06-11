@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -20,12 +20,45 @@ const categoryTabs = [
 ];
 
 export default function WorkoutPage() {
+  const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedExercises, setSelectedExercises] = useState<Set<string>>(
     new Set()
   );
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [loading, setLoading] = useState(true);
+  const [starting, setStarting] = useState(false);
+
+  async function startSession() {
+    if (selectedExercises.size === 0 || starting) return;
+    setStarting(true);
+    try {
+      const payload = {
+        exercises: Array.from(selectedExercises).map((exerciseId) => {
+          const ex = exercises.find((e) => e.id === exerciseId);
+          return {
+            exerciseId,
+            durationMin: ex?.defaultDurationMin ?? 10,
+          };
+        }),
+      };
+      const res = await fetch("/api/workout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) {
+        const session = await res.json();
+        router.push(`/workout/${session.id}`);
+      } else {
+        console.error("セッションの作成に失敗しました");
+        setStarting(false);
+      }
+    } catch (err) {
+      console.error("セッションの作成に失敗しました:", err);
+      setStarting(false);
+    }
+  }
 
   useEffect(() => {
     async function fetchExercises() {
@@ -151,12 +184,17 @@ export default function WorkoutPage() {
       {/* Start Session Button */}
       {selectedExercises.size > 0 && (
         <div className="sticky bottom-20 z-10 md:bottom-4">
-          <Link href={`/workout/new?exercises=${Array.from(selectedExercises).join(",")}`}>
-            <Button size="lg" className="w-full shadow-lg">
-              <Dumbbell className="mr-2 h-5 w-5" />
-              セッションを開始（{selectedExercises.size}種目）
-            </Button>
-          </Link>
+          <Button
+            size="lg"
+            className="w-full shadow-lg"
+            onClick={startSession}
+            disabled={starting}
+          >
+            <Dumbbell className="mr-2 h-5 w-5" />
+            {starting
+              ? "セッションを作成中..."
+              : `セッションを開始（${selectedExercises.size}種目）`}
+          </Button>
         </div>
       )}
     </div>

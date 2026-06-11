@@ -4,8 +4,10 @@ import {
   workoutSessions,
   workoutEntries,
   exercises,
+  userProfile,
 } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
+import { calculateCalories } from "@/lib/exercises/calories";
 
 export async function GET(
   request: Request,
@@ -90,6 +92,56 @@ export async function PATCH(
     if (body.totalCalories !== undefined) updateData.totalCalories = body.totalCalories;
     if (body.aiEvaluation !== undefined) updateData.aiEvaluation = body.aiEvaluation;
     if (body.notes !== undefined) updateData.notes = body.notes;
+
+    // Update individual entries (sets/reps/weight/duration) with calorie recalculation
+    if (Array.isArray(body.entries)) {
+      const profile = db
+        .select()
+        .from(userProfile)
+        .where(eq(userProfile.id, "default"))
+        .get();
+      const bodyWeightKg = profile?.weightKg ?? 65;
+
+      for (const entryUpdate of body.entries) {
+        if (!entryUpdate.id) continue;
+        const entry = db
+          .select()
+          .from(workoutEntries)
+          .where(eq(workoutEntries.id, entryUpdate.id))
+          .get();
+        if (!entry || entry.sessionId !== id) continue;
+
+        const exercise = db
+          .select()
+          .from(exercises)
+          .where(eq(exercises.id, entry.exerciseId))
+          .get();
+
+        const durationMin =
+          entryUpdate.durationMin !== undefined
+            ? entryUpdate.durationMin
+            : entry.durationMin;
+
+        const entryData: Record<string, unknown> = { durationMin };
+        if (entryUpdate.sets !== undefined) entryData.sets = entryUpdate.sets;
+        if (entryUpdate.reps !== undefined) entryData.reps = entryUpdate.reps;
+        if (entryUpdate.weightKg !== undefined)
+          entryData.weightKg = entryUpdate.weightKg;
+        if (entryUpdate.notes !== undefined) entryData.notes = entryUpdate.notes;
+        if (exercise) {
+          entryData.caloriesBurned = calculateCalories(
+            exercise.metValue,
+            bodyWeightKg,
+            durationMin
+          );
+        }
+
+        db.update(workoutEntries)
+          .set(entryData)
+          .where(eq(workoutEntries.id, entryUpdate.id))
+          .run();
+      }
+    }
 
     if (body.status === "completed") {
       const entries = db

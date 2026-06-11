@@ -38,21 +38,29 @@ export default function SettingsPage() {
   const [saved, setSaved] = useState(false);
   const [exporting, setExporting] = useState(false);
 
+  // All raw settings (used to switch API keys per provider)
+  const [allSettings, setAllSettings] = useState<Record<string, string>>({});
+
   // Load settings on mount
+  // Backend canonical keys: llm_provider, llm_model, {provider}_api_key,
+  // ollama_base_url, spontaneous_enabled, spontaneous_interval_min, language
   useEffect(() => {
     async function fetchSettings() {
       try {
         const res = await fetch("/api/settings");
         if (res.ok) {
-          const data = await res.json();
-          if (data.provider) setProvider(data.provider);
-          if (data.model) setModel(data.model);
-          if (data.apiKey) setApiKey(data.apiKey);
-          if (data.ollamaBaseUrl) setOllamaBaseUrl(data.ollamaBaseUrl);
-          if (data.spontaneousEnabled !== undefined)
-            setSpontaneousEnabled(data.spontaneousEnabled);
-          if (data.spontaneousInterval)
-            setSpontaneousInterval(String(data.spontaneousInterval));
+          const data: Record<string, string> = await res.json();
+          setAllSettings(data);
+          const loadedProvider = (data.llm_provider ||
+            "openai") as LLMProviderType;
+          setProvider(loadedProvider);
+          if (data.llm_model) setModel(data.llm_model);
+          setApiKey(data[`${loadedProvider}_api_key`] || "");
+          if (data.ollama_base_url) setOllamaBaseUrl(data.ollama_base_url);
+          if (data.spontaneous_enabled !== undefined)
+            setSpontaneousEnabled(data.spontaneous_enabled === "true");
+          if (data.spontaneous_interval_min)
+            setSpontaneousInterval(data.spontaneous_interval_min);
           if (data.language) setLanguage(data.language);
         }
       } catch (err) {
@@ -62,13 +70,14 @@ export default function SettingsPage() {
     fetchSettings();
   }, []);
 
-  // Update model when provider changes
+  // Update model and API key when provider changes
   function handleProviderChange(newProvider: LLMProviderType) {
     setProvider(newProvider);
     const models = PROVIDER_MODELS[newProvider].models;
     if (models.length > 0) {
       setModel(models[0].id);
     }
+    setApiKey(allSettings[`${newProvider}_api_key`] || "");
   }
 
   const providerOptions = Object.entries(PROVIDER_MODELS).map(
@@ -92,20 +101,25 @@ export default function SettingsPage() {
     setSaving(true);
     setSaved(false);
     try {
+      const payload: Record<string, string> = {
+        llm_provider: provider,
+        llm_model: model,
+        ollama_base_url: ollamaBaseUrl,
+        spontaneous_enabled: String(spontaneousEnabled),
+        spontaneous_interval_min: spontaneousInterval,
+        language,
+      };
+      if (provider !== "ollama" && apiKey) {
+        payload[`${provider}_api_key`] = apiKey;
+      }
       const res = await fetch("/api/settings", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          provider,
-          model,
-          apiKey,
-          ollamaBaseUrl,
-          spontaneousEnabled,
-          spontaneousInterval: parseInt(spontaneousInterval),
-          language,
-        }),
+        body: JSON.stringify(payload),
       });
       if (res.ok) {
+        const updated: Record<string, string> = await res.json();
+        setAllSettings(updated);
         setSaved(true);
         setTimeout(() => setSaved(false), 3000);
       }
