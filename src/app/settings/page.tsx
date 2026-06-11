@@ -44,6 +44,8 @@ export default function SettingsPage() {
   // Load settings on mount
   // Backend canonical keys: llm_provider, llm_model, {provider}_api_key,
   // ollama_base_url, spontaneous_enabled, spontaneous_interval_min, language
+  // *_api_key values arrive masked (••••xxxx); the input stays empty and the
+  // key is only sent when the user types a new one.
   useEffect(() => {
     async function fetchSettings() {
       try {
@@ -55,7 +57,6 @@ export default function SettingsPage() {
             "openai") as LLMProviderType;
           setProvider(loadedProvider);
           if (data.llm_model) setModel(data.llm_model);
-          setApiKey(data[`${loadedProvider}_api_key`] || "");
           if (data.ollama_base_url) setOllamaBaseUrl(data.ollama_base_url);
           if (data.spontaneous_enabled !== undefined)
             setSpontaneousEnabled(data.spontaneous_enabled === "true");
@@ -70,14 +71,17 @@ export default function SettingsPage() {
     fetchSettings();
   }, []);
 
-  // Update model and API key when provider changes
+  const storedKeyMask = allSettings[`${provider}_api_key`] || "";
+
+  // Update model when provider changes; clear the key input so a key for
+  // one provider is never saved under another
   function handleProviderChange(newProvider: LLMProviderType) {
     setProvider(newProvider);
     const models = PROVIDER_MODELS[newProvider].models;
     if (models.length > 0) {
       setModel(models[0].id);
     }
-    setApiKey(allSettings[`${newProvider}_api_key`] || "");
+    setApiKey("");
   }
 
   const providerOptions = Object.entries(PROVIDER_MODELS).map(
@@ -202,6 +206,8 @@ export default function SettingsPage() {
               placeholder={
                 provider === "ollama"
                   ? "Ollamaでは不要です"
+                  : storedKeyMask
+                  ? `設定済み (${storedKeyMask}) — 変更する場合のみ入力`
                   : "sk-... または対応するAPIキー"
               }
               disabled={provider === "ollama"}
@@ -338,6 +344,19 @@ export default function SettingsPage() {
           )}
           {saved ? "設定を保存しました" : "設定を保存"}
         </Button>
+      </div>
+
+      {/* Logout (effective only when APP_PASSWORD auth is enabled) */}
+      <div className="pb-4 text-center">
+        <button
+          onClick={async () => {
+            await fetch("/api/auth/logout", { method: "POST" });
+            window.location.href = "/login";
+          }}
+          className="text-sm text-gray-400 underline-offset-2 hover:text-gray-600 hover:underline dark:text-gray-500 dark:hover:text-gray-300"
+        >
+          ログアウト
+        </button>
       </div>
     </div>
   );
